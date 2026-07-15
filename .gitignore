@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+build/
+dist/
+*.spec
+data/users/users.json
+data/history/*.pkl
