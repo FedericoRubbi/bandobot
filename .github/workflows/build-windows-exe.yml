@@ -30,14 +30,14 @@ jobs:
           pyinstaller --onefile --name bandobot main.py
 
       - name: Assemble release folder
+        shell: pwsh
         run: |
-          mkdir release
-          copy dist\bandobot.exe release\
-          copy .env.example release\.env.example
-          mkdir release\data\users
-          mkdir release\data\history
-          type nul > release\data\users\.gitkeep
-          type nul > release\data\history\.gitkeep
+          New-Item -ItemType Directory -Path release\data\users -Force | Out-Null
+          New-Item -ItemType Directory -Path release\data\history -Force | Out-Null
+          Copy-Item dist\bandobot.exe release\
+          Copy-Item .env.example release\.env.example
+          New-Item -ItemType File -Path release\data\users\.gitkeep -Force | Out-Null
+          New-Item -ItemType File -Path release\data\history\.gitkeep -Force | Out-Null
 
       - uses: actions/upload-artifact@v4
         with:
