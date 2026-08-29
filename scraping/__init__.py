@@ -8,9 +8,9 @@ import scraping.qualenergia
 
 ScrapersList = [
     cdp.Scraper(),
-    # gazzettaufficiale.Scraper(),
-    # incentivigov.Scraper(),
-    # lazioinnova.Scraper(),
-    # obiettivoeuropa.Scraper(),
-    # qualenergia.Scraper(),
+    # gazzettaufficiale.Scraper(),  # not implemented yet (empty module)
+    incentivigov.Scraper(),
+    lazioinnova.Scraper(),
+    obiettivoeuropa.Scraper(),
+    qualenergia.Scraper(),
 ]

@@ -6,6 +6,8 @@ import hashlib
 
 from bs4 import BeautifulSoup
 
+from paths import base_dir
+
 
 logger = logging.getLogger(__name__)
 
@@ -14,7 +16,7 @@ class Scraper(ABC):
     def __init__(self) -> None:
         self.name = self.__module__.split(".")[-1].lower()
         self._history = set()
-        self._history_path = Path("data") / "history" / f"{self.name}.pkl"
+        self._history_path = base_dir() / "data" / "history" / f"{self.name}.pkl"
         if self._history_path.is_file():
             self._load_history()
         else:
@@ -22,6 +24,7 @@ class Scraper(ABC):
         self.results = []
 
     def _create_history(self) -> None:
+        self._history_path.parent.mkdir(parents=True, exist_ok=True)
         self._history_path.touch()
         self._save_history()
 

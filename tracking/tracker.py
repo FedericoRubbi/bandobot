@@ -8,9 +8,10 @@ from telegram import LinkPreviewOptions
 
 import scraping
 from .registration import load_users, save_user
+from paths import base_dir
 
 
-load_dotenv()
+load_dotenv(base_dir() / ".env")
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 
 logger = logging.getLogger(__name__)
@@ -18,6 +19,11 @@ logger = logging.getLogger(__name__)
 
 class Tracker:
     def __init__(self, token: str = TELEGRAM_BOT_TOKEN) -> None:
+        if not token:
+            raise RuntimeError(
+                "TELEGRAM_BOT_TOKEN is not set. Create a .env file next to the "
+                "executable (see .env.example) with your own bot token."
+            )
         self._application = Application.builder().token(token).post_init(self.post_init).build()
         self._application.add_handler(CommandHandler("start", self.start))
         self._application.job_queue.run_repeating(self.check_updates, interval=360)
